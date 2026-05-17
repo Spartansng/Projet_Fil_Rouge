@@ -5,9 +5,8 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({ message: 'API ymmo fonctionne' });
-});
+const authRoutes = require('./routes/authRoutes');
+app.use('/auth', authRoutes);
 
 app.listen(3000, () => {
   console.log('Serveur lancé sur le port 3000');
