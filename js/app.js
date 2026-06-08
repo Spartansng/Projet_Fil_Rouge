@@ -11,6 +11,9 @@ app.use('/auth', authRoutes);
 const propertyRoutes = require('./routes/propertyRoutes');
 app.use('/properties', propertyRoutes);
 
+const appointmentRoutes = require('./routes/appointmentRoutes');
+app.use('/appointments', appointmentRoutes);
+
 app.listen(3000, () => {
   console.log('Serveur lancé sur le port 3000');
 });
