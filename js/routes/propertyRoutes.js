@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getAll, getById, create, update, remove } = require('../controllers/propertyController');
-const authMiddleware = require('../middleware/auth');
+const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/',     getAll);
 router.get('/:id',  getById);
