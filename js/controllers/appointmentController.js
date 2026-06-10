@@ -35,7 +35,8 @@ const getById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const { user_id, property_id, appointment_date, status, message } = req.body;
+  const { property_id, appointment_date, status, message } = req.body;
+  const user_id = req.user.user_id;
 
   const required = { user_id, property_id, appointment_date };
   const missing = Object.keys(required).filter(k => !required[k] && required[k] !== 0);
