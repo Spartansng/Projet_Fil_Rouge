@@ -1,10 +1,10 @@
 redirectIfLoggedIn();
 
-const form     = document.getElementById('login-form');
-const btnText  = document.getElementById('btn-text');
+const form       = document.getElementById('login-form');
+const btnText    = document.getElementById('btn-text');
 const btnSpinner = document.getElementById('btn-spinner');
-const errorBox = document.getElementById('error-box');
-const errorMsg = document.getElementById('error-msg');
+const errorBox   = document.getElementById('error-box');
+const errorMsg   = document.getElementById('error-msg');
 
 function setLoading(state) {
   btnText.classList.toggle('hidden', state);
@@ -55,7 +55,13 @@ form.addEventListener('submit', async (e) => {
     }
 
     saveAuth(json.token, json.user);
-    window.location.href = '../index.html';
+
+    const role = json.user.role;
+    if (role === 'agent' || role === 'admin') {
+      window.location.href = 'agent-dashboard.html';
+    } else {
+      window.location.href = '../index.html';
+    }
 
   } catch {
     showError('Impossible de contacter le serveur. Réessayez plus tard.');

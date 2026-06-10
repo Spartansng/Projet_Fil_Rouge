@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Ymmo — La plateforme immobilière de référence à Toulouse. Appartements, maisons, terrains." />
   <title>Ymmo — Immobilier à Toulouse</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -25,17 +24,13 @@
       }
     }
   </script>
-
-
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="font-sans text-navy bg-white">
 
-
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 h-18 flex items-center justify-between py-4">
 
-  
     <a href="#" class="font-serif font-bold text-2xl text-white tracking-tight">
       Ymmo<span class="text-clay">.</span>
     </a>
@@ -47,14 +42,7 @@
       <a href="#contact"  class="hover:text-white transition-colors">Contact</a>
     </nav>
 
-    <div class="hidden md:flex items-center gap-4">
-      <a href="#" class="text-sm text-white/75 hover:text-white font-medium transition-colors">
-        Connexion
-      </a>
-      <a href="#" class="text-sm bg-clay hover:bg-clay-light text-white font-semibold px-5 py-2.5 rounded-lg transition-colors">
-        Publier un bien
-      </a>
-    </div>
+    <div id="nav-auth" class="hidden md:flex items-center gap-4"></div>
 
     <button id="menu-btn" aria-expanded="false" aria-label="Ouvrir le menu"
       class="md:hidden text-white p-1">
@@ -70,11 +58,10 @@
     <a href="#agences"  class="hover:text-white transition-colors py-1">Agences</a>
     <a href="#contact"  class="hover:text-white transition-colors py-1">Contact</a>
     <hr class="border-white/10" />
-    <a href="#" class="text-white/60 py-1">Connexion</a>
-    <a href="#" class="bg-clay text-white font-semibold px-5 py-2.5 rounded-lg text-center">Publier un bien</a>
+    <a href="pages/login.html" class="text-white/60 py-1">Connexion</a>
+    <a href="pages/register.html" class="bg-clay text-white font-semibold px-5 py-2.5 rounded-lg text-center">Créer un compte</a>
   </div>
 </header>
-
 
 
 <section class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
@@ -155,10 +142,10 @@
 
     <div class="flex flex-wrap gap-2 mt-5">
       <span class="text-white/30 text-xs self-center">Quartiers :</span>
-      <button class="text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Capitole</button>
-      <button class="text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Saint-Cyprien</button>
-      <button class="text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Les Minimes</button>
-      <button class="text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Rangueil</button>
+      <button data-city="Capitole"     class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Capitole</button>
+      <button data-city="Saint-Cyprien" class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Saint-Cyprien</button>
+      <button data-city="Les Minimes"  class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Les Minimes</button>
+      <button data-city="Rangueil"     class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Rangueil</button>
     </div>
   </div>
 
@@ -207,6 +194,7 @@
   </div>
 </section>
 
+
 <section id="biens" class="py-20 px-6">
   <div class="max-w-7xl mx-auto">
 
@@ -218,7 +206,7 @@
         </p>
         <h2 class="font-serif font-bold text-navy text-3xl sm:text-4xl">Biens mis en avant</h2>
       </div>
-      <a href="#" class="reveal text-sm font-semibold text-muted hover:text-clay transition-colors flex items-center gap-1.5 self-start sm:self-auto">
+      <a href="pages/properties.html" class="reveal text-sm font-semibold text-muted hover:text-clay transition-colors flex items-center gap-1.5 self-start sm:self-auto">
         Voir tous les biens
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -252,10 +240,7 @@
               Capitole
             </span>
           </div>
-          <button data-property-id="1"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=1" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
@@ -282,14 +267,10 @@
               St-Cyprien
             </span>
           </div>
-          <button data-property-id="2"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=2" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
-  
       <article class="property-card reveal reveal-delay-2 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
         <div class="relative overflow-hidden h-56">
           <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&auto=format&fit=crop&q=80"
@@ -314,10 +295,7 @@
               Compans
             </span>
           </div>
-          <button data-property-id="3"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=3" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
@@ -345,14 +323,10 @@
               Rangueil
             </span>
           </div>
-          <button data-property-id="4"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=4" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
-   
       <article class="property-card reveal reveal-delay-2 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
         <div class="relative overflow-hidden h-56">
           <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=80"
@@ -376,10 +350,7 @@
               Colomiers
             </span>
           </div>
-          <button data-property-id="5"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=5" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
@@ -406,10 +377,7 @@
               Les Minimes
             </span>
           </div>
-          <button data-property-id="6"
-            class="w-full text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">
-            Voir le bien
-          </button>
+          <a href="pages/property-detail.html?id=6" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
         </div>
       </article>
 
@@ -483,6 +451,7 @@
         </div>
       </div>
 
+    
       <div class="reveal reveal-delay-2 bg-white rounded-2xl p-8 flex gap-6 items-start">
         <div class="w-12 h-12 bg-clay/10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
           <svg class="w-5 h-5 text-clay" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -505,7 +474,6 @@
     </div>
   </div>
 </section>
-
 
 <section class="py-20 px-6 bg-white">
   <div class="max-w-7xl mx-auto">
@@ -570,7 +538,6 @@
 </section>
 
 
-
 <section class="cta-diagonal bg-navy py-24 px-6">
   <div class="max-w-3xl mx-auto text-center reveal">
     <h2 class="font-serif font-bold text-white text-3xl sm:text-4xl mb-4">
@@ -591,12 +558,12 @@
 </section>
 
 
+
 <footer id="contact" class="bg-navy-mid pt-16 pb-8 px-6">
   <div class="max-w-7xl mx-auto">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
 
-      
       <div>
         <a href="#" class="font-serif font-bold text-2xl text-white block mb-4">
           Ymmo<span class="text-clay">.</span>
@@ -620,7 +587,6 @@
         </div>
       </div>
 
-      
       <div>
         <h4 class="text-white font-semibold text-sm mb-5">Recherche</h4>
         <ul class="space-y-3 text-sm text-white/45">
@@ -632,7 +598,6 @@
         </ul>
       </div>
 
-      
       <div>
         <h4 class="text-white font-semibold text-sm mb-5">À propos</h4>
         <ul class="space-y-3 text-sm text-white/45">
@@ -644,7 +609,6 @@
         </ul>
       </div>
 
-      
       <div>
         <h4 class="text-white font-semibold text-sm mb-5">Contact</h4>
         <ul class="space-y-4 text-sm text-white/45">
@@ -670,7 +634,6 @@
       </div>
     </div>
 
-    
     <div class="footer-divider border-t pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/25">
       <p>© 2025 Ymmo. Tous droits réservés.</p>
       <div class="flex gap-6">
@@ -683,7 +646,7 @@
 </footer>
 
 
-
+<script src="js/auth.js"></script>
 <script src="js/homepage.js"></script>
 
 </body>
