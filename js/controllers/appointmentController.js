@@ -10,7 +10,8 @@ const getAll = async (req, res) => {
     );
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur getAll appointments:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -25,12 +26,13 @@ const getById = async (req, res) => {
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: 'Rendez-vous introuvable' });
+      return res.status(404).json({ message: 'Rendez-vous introuvable.' });
     }
 
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur getById appointments:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -52,7 +54,7 @@ const create = async (req, res) => {
     );
 
     if (property.length === 0) {
-      return res.status(404).json({ message: 'Bien immobilier introuvable' });
+      return res.status(404).json({ message: 'Bien immobilier introuvable.' });
     }
 
     const [result] = await db.query(
@@ -68,7 +70,8 @@ const create = async (req, res) => {
 
     res.status(201).json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur create appointment:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -80,14 +83,14 @@ const update = async (req, res) => {
     );
 
     if (existing.length === 0) {
-      return res.status(404).json({ message: 'Rendez-vous introuvable' });
+      return res.status(404).json({ message: 'Rendez-vous introuvable.' });
     }
 
     const allowed = ['appointment_date', 'status', 'message'];
     const fields = Object.keys(req.body).filter(k => allowed.includes(k));
 
     if (fields.length === 0) {
-      return res.status(400).json({ message: 'Aucun champ valide à mettre à jour' });
+      return res.status(400).json({ message: 'Aucun champ valide à mettre à jour.' });
     }
 
     const values = fields.map(k => req.body[k]);
@@ -105,7 +108,8 @@ const update = async (req, res) => {
 
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur update appointment:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -117,14 +121,15 @@ const remove = async (req, res) => {
     );
 
     if (existing.length === 0) {
-      return res.status(404).json({ message: 'Rendez-vous introuvable' });
+      return res.status(404).json({ message: 'Rendez-vous introuvable.' });
     }
 
     await db.query('DELETE FROM appointments WHERE appointment_id = ?', [req.params.id]);
 
-    res.json({ message: 'Rendez-vous supprimé avec succès' });
+    res.json({ message: 'Rendez-vous supprimé avec succès.' });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur remove appointment:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
