@@ -3,11 +3,14 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'username, email et password sont requis.' });
   }
+
+  const allowedRoles = ['acheteur', 'vendeur'];
+  const userRole = allowedRoles.includes(role) ? role : 'acheteur';
 
   try {
     const [existing] = await db.query(
@@ -23,7 +26,7 @@ const register = async (req, res) => {
 
     const [result] = await db.query(
       'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)',
-      [username, email, hashedPassword, 'client']
+      [username, email, hashedPassword, userRole]
     );
 
     return res.status(201).json({
@@ -32,7 +35,7 @@ const register = async (req, res) => {
         user_id: result.insertId,
         username,
         email,
-        role: 'client',
+        role: userRole,
       },
     });
   } catch (err) {
