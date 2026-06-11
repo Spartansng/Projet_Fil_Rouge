@@ -12,7 +12,8 @@ const getAll = async (req, res) => {
     );
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur getAll properties:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -29,12 +30,13 @@ const getById = async (req, res) => {
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: 'Bien immobilier introuvable' });
+      return res.status(404).json({ message: 'Bien immobilier introuvable.' });
     }
 
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur getById properties:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -62,7 +64,8 @@ const create = async (req, res) => {
 
     res.status(201).json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur create property:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -74,14 +77,14 @@ const update = async (req, res) => {
     );
 
     if (existing.length === 0) {
-      return res.status(404).json({ message: 'Bien immobilier introuvable' });
+      return res.status(404).json({ message: 'Bien immobilier introuvable.' });
     }
 
     const allowed = ['title', 'description', 'price', 'surface', 'city', 'postal_code', 'address', 'district', 'type_id', 'agency_id', 'status_id'];
     const fields = Object.keys(req.body).filter(k => allowed.includes(k));
 
     if (fields.length === 0) {
-      return res.status(400).json({ message: 'Aucun champ valide à mettre à jour' });
+      return res.status(400).json({ message: 'Aucun champ valide à mettre à jour.' });
     }
 
     const values = fields.map(k => req.body[k]);
@@ -99,7 +102,8 @@ const update = async (req, res) => {
 
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur update property:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
@@ -111,14 +115,15 @@ const remove = async (req, res) => {
     );
 
     if (existing.length === 0) {
-      return res.status(404).json({ message: 'Bien immobilier introuvable' });
+      return res.status(404).json({ message: 'Bien immobilier introuvable.' });
     }
 
     await db.query('DELETE FROM properties WHERE property_id = ?', [req.params.id]);
 
-    res.json({ message: 'Bien immobilier supprimé avec succès' });
+    res.json({ message: 'Bien immobilier supprimé avec succès.' });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    console.error('Erreur remove property:', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
