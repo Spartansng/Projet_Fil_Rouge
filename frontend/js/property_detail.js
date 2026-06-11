@@ -91,7 +91,7 @@ async function fetchProperty() {
     const res = await fetch(`${API_BASE}/properties/${propertyId}`);
     if (!res.ok) { showError(); return; }
     const json = await res.json();
-    renderProperty(json.data);
+    renderProperty(json);
   } catch {
     showError();
   }
@@ -111,18 +111,67 @@ function handleContactSubmit(e) {
   }, 4000);
 }
 
-function handleAppointmentSubmit(e) {
+async function handleAppointmentSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-appointment');
-  btn.textContent = 'Rendez-vous confirmé ✓';
+
+  const token = getToken();
+  if (!token) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const date    = document.getElementById('appt-date').value;
+  const slot    = document.getElementById('appt-slot').value;
+  const message = document.getElementById('appt-message') ? document.getElementById('appt-message').value : '';
+
+  const appointment_date = `${date} ${slot.replace('h', ':')}:00`;
+
+  btn.textContent = '…';
   btn.disabled = true;
-  btn.classList.replace('bg-[#0F1C2E]', 'bg-green-600');
-  e.target.reset();
-  setTimeout(() => {
-    btn.textContent = 'Confirmer le rendez-vous';
-    btn.disabled = false;
-    btn.classList.replace('bg-green-600', 'bg-[#0F1C2E]');
-  }, 4000);
+
+  try {
+    const res = await fetch(`${API_BASE}/appointments`, {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        property_id:      Number(propertyId),
+        appointment_date: appointment_date,
+        message:          message || null,
+      }),
+    });
+
+    if (!res.ok) {
+      const json = await res.json();
+      btn.textContent = json.message || 'Erreur, réessayez.';
+      btn.classList.replace('bg-[#0F1C2E]', 'bg-red-600');
+      setTimeout(() => {
+        btn.textContent = 'Confirmer le rendez-vous';
+        btn.disabled = false;
+        btn.classList.replace('bg-red-600', 'bg-[#0F1C2E]');
+      }, 3000);
+      return;
+    }
+
+    btn.textContent = 'Rendez-vous confirmé ✓';
+    btn.classList.replace('bg-[#0F1C2E]', 'bg-green-600');
+    e.target.reset();
+    setTimeout(() => {
+      btn.textContent = 'Confirmer le rendez-vous';
+      btn.disabled = false;
+      btn.classList.replace('bg-green-600', 'bg-[#0F1C2E]');
+    }, 4000);
+
+  } catch {
+    btn.textContent = 'Erreur serveur.';
+    setTimeout(() => {
+      btn.textContent = 'Confirmer le rendez-vous';
+      btn.disabled = false;
+    }, 3000);
+  }
 }
 
 window.setGalleryImage = setGalleryImage;
