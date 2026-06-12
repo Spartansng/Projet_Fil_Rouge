@@ -43,6 +43,4 @@ app.use('/agencies', agencyRoutes);
 const referenceRoutes = require('./routes/referenceRoutes');
 app.use('/references', referenceRoutes);
 
-app.listen(3000, () => {
-  console.log('Serveur lancé sur le port 3000');
-});
+module.exports = app;
