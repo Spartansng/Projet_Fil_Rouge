@@ -1,4 +1,3 @@
-const API_BASE = 'http://localhost:3000';
 const PER_PAGE = 9;
 
 let currentPage = 1;
