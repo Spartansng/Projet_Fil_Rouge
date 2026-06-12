@@ -83,7 +83,7 @@ function renderAppointments(appointments) {
         <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${appointmentBadge(a.status)}">
           ${appointmentLabel(a.status)}
         </span>
-        <a href="property-detail.html?id=${a.property_id}"
+          <a href="property_detail.html?id=${a.property_id}"
           class="text-xs font-semibold text-[#0F1C2E] bg-[#F4F5F7] hover:bg-[#DDE2E9] px-3 py-1.5 rounded-lg transition-colors">
           Voir le bien
         </a>
