@@ -8,10 +8,19 @@ const getAll = async (req, res) => {
               a.status, a.message, a.created_at, a.updated_at
        FROM appointments a`;
     const params = [];
+    const conditions = [];
 
-    if (!isStaff(req.user)) {
-      query += ' WHERE a.user_id = ?';
+    if (req.user.role === 'agent') {
+      query += ' JOIN properties p ON p.property_id = a.property_id';
+      conditions.push('p.agency_id = ?');
+      params.push(req.user.agency_id);
+    } else if (!isStaff(req.user)) {
+      conditions.push('a.user_id = ?');
       params.push(req.user.user_id);
+    }
+
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
     }
 
     query += ' ORDER BY a.created_at DESC';

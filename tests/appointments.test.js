@@ -34,8 +34,27 @@ describe('GET /appointments', () => {
     expect(res.body).toHaveLength(1);
   });
 
-  it('returns every appointment for an agent', async () => {
+  it('only returns appointments tied to the agent own agency', async () => {
     const token = buildToken({ user_id: 99, email: 'agent@ymmo.fr', role: 'agent', agency_id: 1 });
+
+    db.query.mockResolvedValueOnce([[
+      { appointment_id: 10, user_id: 1, property_id: 5 },
+      { appointment_id: 11, user_id: 2, property_id: 6 },
+    ]]);
+
+    const res = await request(app)
+      .get('/appointments')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(db.query.mock.calls[0][0]).toMatch(/JOIN properties p ON p\.property_id = a\.property_id/);
+    expect(db.query.mock.calls[0][0]).toMatch(/WHERE p\.agency_id = \?/);
+    expect(db.query.mock.calls[0][1]).toEqual([1]);
+    expect(res.body).toHaveLength(2);
+  });
+
+  it('returns every appointment for an admin without filtering', async () => {
+    const token = buildToken({ user_id: 1, email: 'admin@ymmo.fr', role: 'admin', agency_id: null });
 
     db.query.mockResolvedValueOnce([[
       { appointment_id: 10, user_id: 1, property_id: 5 },
