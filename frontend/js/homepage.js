@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const location = document.getElementById('search-location').value.trim();
     const type     = document.getElementById('search-type').value;
     const budget   = document.getElementById('search-budget').value;
-    if (location) params.set('city',       location);
-    if (type)     params.set('type_id',    type);
-    if (budget)   params.set('maxPrice',   budget);
+    if (location) params.set('city',     location);
+    if (type)     params.set('type_id',  type);
+    if (budget)   params.set('maxPrice', budget);
     window.location.href = `pages/properties.html?${params.toString()}`;
   });
 
@@ -85,10 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const user = typeof getUser === 'function' ? getUser() : null;
   const navAuth = document.getElementById('nav-auth');
   if (user) {
+    const href = (user.role === 'agent' || user.role === 'admin')
+  ? 'pages/agent-dashboard.html'
+  : 'pages/user_dashboard.html';
     navAuth.innerHTML = `
       <span class="text-sm text-white/70 font-medium">${user.username}</span>
-      <a href="${user.role === 'agent' || user.role === 'admin' ? 'pages/agent-dashboard.html' : 'pages/properties.html'}"
-        class="text-sm bg-clay hover:bg-clay-light text-white font-semibold px-5 py-2.5 rounded-lg transition-colors">
+      <a href="${href}" class="text-sm bg-clay hover:bg-clay-light text-white font-semibold px-5 py-2.5 rounded-lg transition-colors">
         Mon espace
       </a>
     `;

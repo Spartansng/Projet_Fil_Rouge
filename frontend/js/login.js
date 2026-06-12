@@ -60,7 +60,7 @@ form.addEventListener('submit', async (e) => {
     if (role === 'agent' || role === 'admin') {
       window.location.href = 'agent-dashboard.html';
     } else {
-      window.location.href = 'user-dashboard.html';
+      window.location.href = 'user_dashboard.html';
     }
 
   } catch {

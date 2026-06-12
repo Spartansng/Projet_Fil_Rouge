@@ -125,7 +125,7 @@ async function handleAppointmentSubmit(e) {
   const slot    = document.getElementById('appt-slot').value;
   const message = document.getElementById('appt-message') ? document.getElementById('appt-message').value : '';
 
-  const appointment_date = `${date} ${slot.replace('h', ':')}:00`;
+  const appointment_date = `${date} ${slot}:00`;
 
   btn.textContent = '…';
   btn.disabled = true;
@@ -183,5 +183,14 @@ document.getElementById('appointment-form').addEventListener('submit', handleApp
 document.getElementById('menu-btn').addEventListener('click', () => {
   document.getElementById('mobile-menu').classList.toggle('hidden');
 });
+
+const user = typeof getUser === 'function' ? getUser() : null;
+const navAuth = document.getElementById('nav-auth');
+if (user) {
+  const href = (user.role === 'agent' || user.role === 'admin') ? 'agent-dashboard.html' : 'user-dashboard.html';
+  navAuth.innerHTML = `<span class="text-sm text-white/70 font-medium">${user.username}</span><a href="${href}" class="text-sm bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold px-5 py-2 rounded-lg transition-colors">Mon espace</a>`;
+} else {
+  navAuth.innerHTML = `<a href="login.html" class="text-sm text-white/75 hover:text-white font-medium transition-colors">Connexion</a><a href="register.html" class="text-sm bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold px-5 py-2 rounded-lg transition-colors">Créer un compte</a>`;
+}
 
 fetchProperty();
