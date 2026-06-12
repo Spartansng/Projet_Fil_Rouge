@@ -1,5 +1,7 @@
 const db = require('../config/db');
 
+const isAdmin = (user) => user.role === 'admin';
+
 const getAll = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -43,18 +45,24 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   const { title, description, price, surface, city, postal_code, address, district, type_id, agency_id, status_id } = req.body;
 
-  const required = { title, price, city, address, district, type_id, agency_id, status_id };
+  const effectiveAgencyId = isAdmin(req.user) ? agency_id : req.user.agency_id;
+
+  const required = { title, price, city, address, district, type_id, agency_id: effectiveAgencyId, status_id };
   const missing = Object.keys(required).filter(k => !required[k] && required[k] !== 0);
 
   if (missing.length > 0) {
     return res.status(400).json({ message: 'Champs obligatoires manquants', fields: missing });
   }
 
+  if (!isAdmin(req.user) && agency_id && Number(agency_id) !== Number(req.user.agency_id)) {
+    return res.status(403).json({ message: "Accès refusé : vous ne pouvez créer un bien que pour votre propre agence." });
+  }
+
   try {
     const [result] = await db.query(
       `INSERT INTO properties (title, description, price, surface, city, postal_code, address, district, type_id, agency_id, status_id)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, description ?? null, price, surface ?? null, city, postal_code ?? null, address, district, type_id, agency_id, status_id]
+      [title, description ?? null, price, surface ?? null, city, postal_code ?? null, address, district, type_id, effectiveAgencyId, status_id]
     );
 
     const [rows] = await db.query(
@@ -80,8 +88,18 @@ const update = async (req, res) => {
       return res.status(404).json({ message: 'Bien immobilier introuvable.' });
     }
 
+    const property = existing[0];
+
+    if (!isAdmin(req.user) && property.agency_id !== req.user.agency_id) {
+      return res.status(403).json({ message: 'Accès refusé : ce bien appartient à une autre agence.' });
+    }
+
     const allowed = ['title', 'description', 'price', 'surface', 'city', 'postal_code', 'address', 'district', 'type_id', 'agency_id', 'status_id'];
-    const fields = Object.keys(req.body).filter(k => allowed.includes(k));
+    let fields = Object.keys(req.body).filter(k => allowed.includes(k));
+
+    if (!isAdmin(req.user)) {
+      fields = fields.filter(k => k !== 'agency_id');
+    }
 
     if (fields.length === 0) {
       return res.status(400).json({ message: 'Aucun champ valide à mettre à jour.' });
@@ -116,6 +134,12 @@ const remove = async (req, res) => {
 
     if (existing.length === 0) {
       return res.status(404).json({ message: 'Bien immobilier introuvable.' });
+    }
+
+    const property = existing[0];
+
+    if (!isAdmin(req.user) && property.agency_id !== req.user.agency_id) {
+      return res.status(403).json({ message: 'Accès refusé : ce bien appartient à une autre agence.' });
     }
 
     await db.query('DELETE FROM properties WHERE property_id = ?', [req.params.id]);
