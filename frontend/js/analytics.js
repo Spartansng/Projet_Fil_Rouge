@@ -2,7 +2,7 @@ const user = typeof getUser === 'function' ? getUser() : null;
 const navAuth = document.getElementById('nav-auth');
 
 if (user) {
-  const href = (user.role === 'agent' || user.role === 'admin') ? 'agent-dashboard.html' : 'user-dashboard.html';
+  const href = (user.role === 'agent' || user.role === 'admin') ? 'agent-dashboard.html' : 'user_dashboard.html';
   navAuth.innerHTML = `
     <span class="text-sm text-white/70 font-medium">${user.username}</span>
     <a href="${href}" class="text-sm bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold px-5 py-2 rounded-lg transition-colors">Mon espace</a>`;

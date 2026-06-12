@@ -185,7 +185,7 @@ document.getElementById('menu-btn').addEventListener('click', () => {
 const user = typeof getUser === 'function' ? getUser() : null;
 const navAuth = document.getElementById('nav-auth');
 if (user) {
-  const href = (user.role === 'agent' || user.role === 'admin') ? 'agent-dashboard.html' : 'user-dashboard.html';
+  const href = (user.role === 'agent' || user.role === 'admin') ? 'agent-dashboard.html' : 'user_dashboard.html';
   navAuth.innerHTML = `<span class="text-sm text-white/70 font-medium">${user.username}</span><a href="${href}" class="text-sm bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold px-5 py-2 rounded-lg transition-colors">Mon espace</a>`;
 } else {
   navAuth.innerHTML = `<a href="login.html" class="text-sm text-white/75 hover:text-white font-medium transition-colors">Connexion</a><a href="register.html" class="text-sm bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold px-5 py-2 rounded-lg transition-colors">Créer un compte</a>`;
