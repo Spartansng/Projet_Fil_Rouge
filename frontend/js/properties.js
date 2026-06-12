@@ -120,7 +120,7 @@ function cardHTML(p) {
             </svg>
             ${p.surface ? p.surface + ' m²' : 'N/A'}
           </span>
-          <a href="property-detail.html?id=${p.property_id}"
+          <a href="property_detail.html?id=${p.property_id}"
             class="text-xs font-semibold bg-[#0F1C2E] hover:bg-[#1A2D45] text-white px-4 py-2 rounded-xl transition-colors">
             Voir le bien
           </a>
