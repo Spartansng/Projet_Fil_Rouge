@@ -1,13 +1,22 @@
 const db = require('../config/db');
 
+const isStaff = (user) => user.role === 'admin' || user.role === 'agent';
+
 const getAll = async (req, res) => {
   try {
-    const [rows] = await db.query(
-      `SELECT a.appointment_id, a.user_id, a.property_id, a.appointment_date,
+    let query = `SELECT a.appointment_id, a.user_id, a.property_id, a.appointment_date,
               a.status, a.message, a.created_at, a.updated_at
-       FROM appointments a
-       ORDER BY a.created_at DESC`
-    );
+       FROM appointments a`;
+    const params = [];
+
+    if (!isStaff(req.user)) {
+      query += ' WHERE a.user_id = ?';
+      params.push(req.user.user_id);
+    }
+
+    query += ' ORDER BY a.created_at DESC';
+
+    const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (err) {
     console.error('Erreur getAll appointments:', err);
@@ -29,7 +38,13 @@ const getById = async (req, res) => {
       return res.status(404).json({ message: 'Rendez-vous introuvable.' });
     }
 
-    res.json(rows[0]);
+    const appointment = rows[0];
+
+    if (!isStaff(req.user) && appointment.user_id !== req.user.user_id) {
+      return res.status(403).json({ message: 'Accès refusé : ce rendez-vous ne vous appartient pas.' });
+    }
+
+    res.json(appointment);
   } catch (err) {
     console.error('Erreur getById appointments:', err);
     res.status(500).json({ message: 'Erreur serveur.' });
@@ -86,7 +101,17 @@ const update = async (req, res) => {
       return res.status(404).json({ message: 'Rendez-vous introuvable.' });
     }
 
-    const allowed = ['appointment_date', 'status', 'message'];
+    const appointment = existing[0];
+    const staff = isStaff(req.user);
+
+    if (!staff && appointment.user_id !== req.user.user_id) {
+      return res.status(403).json({ message: 'Accès refusé : ce rendez-vous ne vous appartient pas.' });
+    }
+
+    const allowed = staff
+      ? ['appointment_date', 'status', 'message']
+      : ['appointment_date', 'message'];
+
     const fields = Object.keys(req.body).filter(k => allowed.includes(k));
 
     if (fields.length === 0) {
@@ -122,6 +147,12 @@ const remove = async (req, res) => {
 
     if (existing.length === 0) {
       return res.status(404).json({ message: 'Rendez-vous introuvable.' });
+    }
+
+    const appointment = existing[0];
+
+    if (!isStaff(req.user) && appointment.user_id !== req.user.user_id) {
+      return res.status(403).json({ message: 'Accès refusé : ce rendez-vous ne vous appartient pas.' });
     }
 
     await db.query('DELETE FROM appointments WHERE appointment_id = ?', [req.params.id]);
