@@ -1,5 +1,15 @@
 const API_BASE = 'http://localhost:3000';
 
+function escapeHtml(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function saveAuth(token, user) {
   localStorage.setItem('ymmo_token', token);
   localStorage.setItem('ymmo_user', JSON.stringify(user));

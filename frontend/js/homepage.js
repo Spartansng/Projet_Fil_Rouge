@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ? 'pages/agent-dashboard.html'
   : 'pages/user_dashboard.html';
     navAuth.innerHTML = `
-      <span class="text-sm text-white/70 font-medium">${user.username}</span>
+      <span class="text-sm text-white/70 font-medium">${escapeHtml(user.username)}</span>
       <a href="${href}" class="text-sm bg-clay hover:bg-clay-light text-white font-semibold px-5 py-2.5 rounded-lg transition-colors">
         Mon espace
       </a>

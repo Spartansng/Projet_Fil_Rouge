@@ -59,14 +59,14 @@ function renderProperties() {
   tbody.innerHTML = properties.map(p => `
     <tr class="border-t border-slate-100 hover:bg-slate-50 transition-colors">
       <td class="px-6 py-4">
-        <div class="font-semibold text-navy text-sm">${p.title}</div>
-        <div class="text-muted text-xs mt-0.5">${p.city}${p.district ? ' — ' + p.district : ''}</div>
+        <div class="font-semibold text-navy text-sm">${escapeHtml(p.title)}</div>
+        <div class="text-muted text-xs mt-0.5">${escapeHtml(p.city)}${p.district ? ' — ' + escapeHtml(p.district) : ''}</div>
       </td>
       <td class="px-6 py-4 text-sm text-navy font-medium">${Number(p.price).toLocaleString('fr-FR')} €</td>
       <td class="px-6 py-4 text-sm text-muted">${p.surface ? p.surface + ' m²' : '—'}</td>
       <td class="px-6 py-4">
         <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${statusBadge(p.status_id)}">
-          ${p.status_name || 'Statut #' + p.status_id}
+          ${escapeHtml(p.status_name || 'Statut #' + p.status_id)}
         </span>
       </td>
       <td class="px-6 py-4 text-xs text-muted">${formatDate(p.created_at)}</td>
@@ -161,7 +161,7 @@ function renderAppointments(appointments) {
         <div>
           <p class="font-semibold text-navy text-sm">Utilisateur #${a.user_id}</p>
           <p class="text-navy/60 text-xs mt-0.5">Bien #${a.property_id}</p>
-          ${a.message ? `<p class="text-muted text-xs mt-1 italic">"${a.message}"</p>` : ''}
+          ${a.message ? `<p class="text-muted text-xs mt-1 italic">"${escapeHtml(a.message)}"</p>` : ''}
         </div>
       </div>
       <div class="flex items-center gap-3">
@@ -208,9 +208,9 @@ async function loadFormData() {
     selStatus.innerHTML = '<option value="">Sélectionner</option>';
     selAgency.innerHTML = '<option value="">Sélectionner</option>';
 
-    (types.data    || []).forEach(t => selType.innerHTML   += `<option value="${t.type_id}">${t.name}</option>`);
-    (statuses.data || []).forEach(s => selStatus.innerHTML += `<option value="${s.status_id}">${s.name}</option>`);
-    (agencies.data || []).forEach(a => selAgency.innerHTML += `<option value="${a.agency_id}">${a.name}</option>`);
+    (types.data    || []).forEach(t => selType.innerHTML   += `<option value="${t.type_id}">${escapeHtml(t.name)}</option>`);
+    (statuses.data || []).forEach(s => selStatus.innerHTML += `<option value="${s.status_id}">${escapeHtml(s.name)}</option>`);
+    (agencies.data || []).forEach(a => selAgency.innerHTML += `<option value="${a.agency_id}">${escapeHtml(a.name)}</option>`);
   } catch {}
 }
 

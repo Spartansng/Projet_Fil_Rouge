@@ -76,7 +76,7 @@ function renderAppointments(appointments) {
         <div>
           <p class="font-semibold text-[#0F1C2E] text-sm">Bien #${a.property_id}</p>
           <p class="text-[#8FA3B8] text-xs mt-0.5">${formatDate(a.appointment_date)} à ${formatTime(a.appointment_date)}</p>
-          ${a.message ? `<p class="text-[#8FA3B8] text-xs mt-1 italic">"${a.message}"</p>` : ''}
+          ${a.message ? `<p class="text-[#8FA3B8] text-xs mt-1 italic">"${escapeHtml(a.message)}"</p>` : ''}
         </div>
       </div>
       <div class="flex items-center gap-3">
@@ -160,10 +160,10 @@ async function loadFormData() {
     selAgency.innerHTML = '<option value="">Sélectionner</option>';
 
     (Array.isArray(types)    ? types    : types.data    || []).forEach(t => {
-      selType.innerHTML   += `<option value="${t.type_id}">${t.name}</option>`;
+      selType.innerHTML   += `<option value="${t.type_id}">${escapeHtml(t.name)}</option>`;
     });
     (Array.isArray(agencies) ? agencies : agencies.data || []).forEach(a => {
-      selAgency.innerHTML += `<option value="${a.agency_id}">${a.name}</option>`;
+      selAgency.innerHTML += `<option value="${a.agency_id}">${escapeHtml(a.name)}</option>`;
     });
   } catch {}
 }
