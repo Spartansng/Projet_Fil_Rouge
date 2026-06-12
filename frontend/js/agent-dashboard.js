@@ -43,7 +43,6 @@ async function loadProperties() {
 function renderStats() {
   $('stat-total').textContent = properties.length;
   $('stat-requests').textContent = MOCK_REQUESTS.filter(r => r.status === 'nouveau').length;
-  $('stat-appointments').textContent = MOCK_APPOINTMENTS.filter(a => a.status === 'confirmé').length;
 }
 
 function renderProperties() {
