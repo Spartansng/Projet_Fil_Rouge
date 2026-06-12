@@ -4,14 +4,54 @@ const isAdmin = (user) => user.role === 'admin';
 
 const getAll = async (req, res) => {
   try {
-    const [rows] = await db.query(
-      `SELECT p.property_id, p.title, p.description, p.price, p.surface,
+    const { city, type_id, agency_id, minPrice, maxPrice, minSurface } = req.query;
+
+    const conditions = [];
+    const params = [];
+
+    if (city) {
+      conditions.push('p.city LIKE ?');
+      params.push(`%${city}%`);
+    }
+
+    if (type_id) {
+      conditions.push('p.type_id = ?');
+      params.push(Number(type_id));
+    }
+
+    if (agency_id) {
+      conditions.push('p.agency_id = ?');
+      params.push(Number(agency_id));
+    }
+
+    if (minPrice) {
+      conditions.push('p.price >= ?');
+      params.push(Number(minPrice));
+    }
+
+    if (maxPrice) {
+      conditions.push('p.price <= ?');
+      params.push(Number(maxPrice));
+    }
+
+    if (minSurface) {
+      conditions.push('p.surface >= ?');
+      params.push(Number(minSurface));
+    }
+
+    let query = `SELECT p.property_id, p.title, p.description, p.price, p.surface,
               p.city, p.postal_code, p.address, p.district,
               p.type_id, p.agency_id, p.status_id,
               p.created_at, p.updated_at
-       FROM properties p
-       ORDER BY p.created_at DESC`
-    );
+       FROM properties p`;
+
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    query += ' ORDER BY p.created_at DESC';
+
+    const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (err) {
     console.error('Erreur getAll properties:', err);
