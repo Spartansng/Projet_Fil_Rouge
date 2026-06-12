@@ -3,3 +3,5 @@ node_modules/
 .env
 
 python/*.csv
+
+.ipynb_checkpoints/
