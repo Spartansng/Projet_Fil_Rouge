@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MarchÃ© immobilier Toulouse â€” Ymmo</title>
+  <title>Marché immobilier Toulouse — Ymmo</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="font-sans bg-slate text-navy">
-
+ 
 <!-- NAVBAR -->
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-navy shadow-md">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
@@ -39,7 +39,7 @@
     </a>
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-white/75">
       <a href="properties.html" class="hover:text-white transition-colors">Biens</a>
-      <a href="analytics.html" class="text-white border-b border-[#D45A1A] pb-0.5">MarchÃ©</a>
+      <a href="analytics.html" class="text-white border-b border-[#D45A1A] pb-0.5">Marché</a>
       <a href="#" class="hover:text-white transition-colors">Agences</a>
     </nav>
     <div id="nav-auth" class="hidden md:flex items-center gap-4"></div>
@@ -51,116 +51,116 @@
   </div>
   <div id="mobile-menu" class="hidden md:hidden bg-[#1A2D45] border-t border-white/10 px-6 py-4 flex flex-col gap-3 text-sm text-white/80">
     <a href="properties.html">Biens</a>
-    <a href="analytics.html" class="text-white font-semibold">MarchÃ©</a>
+    <a href="analytics.html" class="text-white font-semibold">Marché</a>
     <a href="#">Agences</a>
   </div>
 </header>
-
+ 
 <!-- PAGE HEADER -->
 <section class="bg-navy pt-28 pb-12 px-6">
   <div class="max-w-7xl mx-auto">
     <p class="text-[#D45A1A] text-xs font-semibold uppercase tracking-widest mb-3 flex items-center gap-2">
       <span class="w-5 h-px bg-[#D45A1A] inline-block"></span>
-      DonnÃ©es DVF 2025 â€” data.gouv.fr
+      Données DVF 2025 — data.gouv.fr
     </p>
     <h1 class="font-serif font-bold text-white text-3xl sm:text-4xl mb-3">
-      MarchÃ© immobilier toulousain
+      Marché immobilier toulousain
     </h1>
     <p class="text-white/45 text-sm max-w-xl">
-      Analyse de 8 706 transactions rÃ©elles sur Toulouse en 2025. Comparez les quartiers, les prix au mÂ² et trouvez le bien qui correspond Ã  votre budget.
+      Analyse de 8 706 transactions réelles sur Toulouse en 2025. Comparez les quartiers, les prix au m² et trouvez le bien qui correspond à votre budget.
     </p>
   </div>
 </section>
-
+ 
 <!-- KPI CARDS -->
 <section class="px-6 py-10">
   <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-5">
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
-      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Transactions analysÃ©es</p>
+      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Transactions analysées</p>
       <p class="font-serif font-bold text-navy text-3xl">8 706</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Ventes 2025</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
-      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix mÂ² mÃ©dian appt</p>
-      <p class="font-serif font-bold text-navy text-3xl">3 349 â‚¬</p>
+      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix m² médian appt</p>
+      <p class="font-serif font-bold text-navy text-3xl">3 349 €</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Appartements</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
-      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix mÂ² mÃ©dian maison</p>
-      <p class="font-serif font-bold text-navy text-3xl">3 750 â‚¬</p>
+      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix m² médian maison</p>
+      <p class="font-serif font-bold text-navy text-3xl">3 750 €</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Maisons</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
-      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix mÃ©dian de vente</p>
-      <p class="font-serif font-bold text-navy text-3xl">200 kâ‚¬</p>
+      <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix médian de vente</p>
+      <p class="font-serif font-bold text-navy text-3xl">200 k€</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Toutes transactions</p>
     </div>
   </div>
 </section>
-
+ 
 <!-- CHARTS ROW 1 -->
 <section class="px-6 pb-10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-    <!-- Prix mÂ² par quartier -->
+ 
+    <!-- Prix m² par quartier -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
-      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Prix au mÂ² par quartier</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Prix mÃ©dian en â‚¬/mÂ² â€” Toulouse 2025</p>
+      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Prix au m² par quartier</h2>
+      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian en €/m² — Toulouse 2025</p>
       <canvas id="chartPrixQuartier" height="260"></canvas>
     </div>
-
+ 
     <!-- Volume par quartier -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
-      <h2 class="font-serif font-semibold text-navy text-lg mb-1">ActivitÃ© par quartier</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Nombre de transactions â€” Toulouse 2025</p>
+      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Activité par quartier</h2>
+      <p class="text-[#8FA3B8] text-xs mb-5">Nombre de transactions — Toulouse 2025</p>
       <canvas id="chartVolumeQuartier" height="260"></canvas>
     </div>
-
+ 
   </div>
 </section>
-
+ 
 <!-- CHARTS ROW 2 -->
 <section class="px-6 pb-10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-    <!-- RÃ©partition type -->
+ 
+    <!-- Répartition type -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
-      <h2 class="font-serif font-semibold text-navy text-lg mb-1">RÃ©partition des biens</h2>
+      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Répartition des biens</h2>
       <p class="text-[#8FA3B8] text-xs mb-5">Appartements vs Maisons</p>
       <canvas id="chartRepartition" height="240"></canvas>
     </div>
-
-    <!-- Ã‰volution prix par mois -->
+ 
+    <!-- Évolution prix par mois -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6 lg:col-span-2">
-      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Ã‰volution du prix au mÂ²</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Prix mÃ©dian mensuel en â‚¬/mÂ² â€” 2025</p>
+      <h2 class="font-serif font-semibold text-navy text-lg mb-1">Évolution du prix au m²</h2>
+      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian mensuel en €/m² — 2025</p>
       <canvas id="chartEvolution" height="160"></canvas>
     </div>
-
+ 
   </div>
 </section>
-
+ 
 <!-- CHARTS ROW 3 -->
 <section class="px-6 pb-10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-    <!-- Biens par nb piÃ¨ces -->
+ 
+    <!-- Biens par nb pièces -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
       <h2 class="font-serif font-semibold text-navy text-lg mb-1">Biens les plus vendus</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Volume par nombre de piÃ¨ces</p>
+      <p class="text-[#8FA3B8] text-xs mb-5">Volume par nombre de pièces</p>
       <canvas id="chartPieces" height="220"></canvas>
     </div>
-
+ 
     <!-- Tableau comparatif quartiers -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
       <h2 class="font-serif font-semibold text-navy text-lg mb-1">Comparatif quartiers</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Prix mÂ², volume et accessibilitÃ©</p>
+      <p class="text-[#8FA3B8] text-xs mb-5">Prix m², volume et accessibilité</p>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-[#DDE2E9]">
               <th class="text-left text-xs font-semibold text-[#8FA3B8] uppercase tracking-wider py-2 pr-4">Quartier</th>
-              <th class="text-right text-xs font-semibold text-[#8FA3B8] uppercase tracking-wider py-2 pr-4">Prix mÂ²</th>
+              <th class="text-right text-xs font-semibold text-[#8FA3B8] uppercase tracking-wider py-2 pr-4">Prix m²</th>
               <th class="text-right text-xs font-semibold text-[#8FA3B8] uppercase tracking-wider py-2 pr-4">Ventes</th>
               <th class="text-right text-xs font-semibold text-[#8FA3B8] uppercase tracking-wider py-2">Transports</th>
             </tr>
@@ -169,16 +169,16 @@
         </table>
       </div>
     </div>
-
+ 
   </div>
 </section>
-
+ 
 <!-- CTA -->
 <section class="px-6 pb-16">
   <div class="max-w-7xl mx-auto bg-navy rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
     <div>
       <h2 class="font-serif font-bold text-white text-2xl mb-1">Trouvez votre bien au bon prix</h2>
-      <p class="text-white/50 text-sm">Utilisez ces donnÃ©es pour affiner votre recherche et nÃ©gocier en toute connaissance de cause.</p>
+      <p class="text-white/50 text-sm">Utilisez ces données pour affiner votre recherche et négocier en toute connaissance de cause.</p>
     </div>
     <a href="properties.html"
       class="bg-[#D45A1A] hover:bg-[#E8743A] text-white font-semibold text-sm px-8 py-3.5 rounded-xl transition-colors whitespace-nowrap flex-shrink-0">
@@ -186,16 +186,17 @@
     </a>
   </div>
 </section>
-
+ 
 <!-- FOOTER -->
 <footer class="bg-navy py-8 px-6">
   <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/25">
     <a href="../index.html" class="font-serif font-bold text-base text-white">Ymmo<span class="text-[#D45A1A]">.</span></a>
-    <p>Source : Demandes de Valeurs FonciÃ¨res (DVF) â€” data.gouv.fr â€” 2025</p>
-    <p>Â© 2025 Ymmo. Tous droits rÃ©servÃ©s.</p>
+    <p>Source : Demandes de Valeurs Foncières (DVF) — data.gouv.fr — 2025</p>
+    <p>© 2025 Ymmo. Tous droits réservés.</p>
   </div>
 </footer>
-
+ 
 <script src="../js/auth.js"></script>
 <script src="../js/analytics.js"></script>
 </body>
+</html>
