@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "transactions": 7180,
+    "nb_appartements": 6100,
+    "nb_maisons": 1080,
+    "prix_median_global": 173925,
+    "prix_m2_median_appart": 3285,
+    "prix_m2_median_maison": 3736,
+    "secteur_plus_actif": "Nord — Les Minimes",
+    "secteur_plus_cher": "Centre — Capitole",
+    "mois_plus_actif": "Jul"
+  },
+  "secteurs": {
+    "labels": [
+      "Centre — Capitole",
+      "Sud — Rangueil",
+      "Nord — Les Minimes",
+      "Ouest — Saint-Cyprien",
+      "Est — Bonnefoy",
+      "Nord-Est — Compans"
+    ],
+    "prix_m2": [
+      4666,
+      2469,
+      2797,
+      3357,
+      3580,
+      3417
+    ],
+    "volumes": [
+      1115,
+      803,
+      1614,
+      991,
+      1455,
+      1202
+    ]
+  },
+  "evolution": {
+    "mois": [
+      "Jan",
+      "Fév",
+      "Mar",
+      "Avr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aoû",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Déc"
+    ],
+    "prix_m2_median": [
+      3385,
+      3510,
+      3199,
+      3327,
+      3218,
+      3392,
+      3450,
+      3437,
+      3409,
+      3275,
+      3326,
+      3280
+    ]
+  },
+  "repartition": {
+    "labels": [
+      "Appartements",
+      "Maisons"
+    ],
+    "values": [
+      6100,
+      1080
+    ]
+  },
+  "pieces": {
+    "labels": [
+      "T0",
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6"
+    ],
+    "values": [
+      3,
+      1167,
+      1799,
+      2162,
+      1382,
+      475,
+      128
+    ]
+  },
+  "prediction": {
+    "mae": 1364,
+    "r2": 0.144
+  }
+}
