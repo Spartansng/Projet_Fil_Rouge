@@ -3,12 +3,15 @@ const { body } = require('express-validator');
 const createPropertyValidator = [
   body('title')
     .trim()
+    .escape()
     .notEmpty().withMessage('Le titre est requis.')
     .isLength({ max: 255 }).withMessage('Le titre ne doit pas dépasser 255 caractères.'),
 
   body('description')
     .optional({ nullable: true })
-    .isString().withMessage('La description doit être une chaîne de caractères.'),
+    .isString().withMessage('La description doit être une chaîne de caractères.')
+    .trim()
+    .escape(),
 
   body('price')
     .notEmpty().withMessage('Le prix est requis.')
@@ -20,19 +23,23 @@ const createPropertyValidator = [
 
   body('city')
     .trim()
+    .escape()
     .notEmpty().withMessage('La ville est requise.'),
 
   body('postal_code')
     .optional({ nullable: true })
     .trim()
+    .escape()
     .isLength({ max: 20 }).withMessage('Le code postal est trop long.'),
 
   body('address')
     .trim()
+    .escape()
     .notEmpty().withMessage("L'adresse est requise."),
 
   body('district')
     .trim()
+    .escape()
     .notEmpty().withMessage('Le quartier est requis.'),
 
   body('type_id')
@@ -52,12 +59,15 @@ const updatePropertyValidator = [
   body('title')
     .optional()
     .trim()
+    .escape()
     .notEmpty().withMessage('Le titre ne peut pas être vide.')
     .isLength({ max: 255 }).withMessage('Le titre ne doit pas dépasser 255 caractères.'),
 
   body('description')
     .optional({ nullable: true })
-    .isString().withMessage('La description doit être une chaîne de caractères.'),
+    .isString().withMessage('La description doit être une chaîne de caractères.')
+    .trim()
+    .escape(),
 
   body('price')
     .optional()
@@ -70,21 +80,25 @@ const updatePropertyValidator = [
   body('city')
     .optional()
     .trim()
+    .escape()
     .notEmpty().withMessage('La ville ne peut pas être vide.'),
 
   body('postal_code')
     .optional({ nullable: true })
     .trim()
+    .escape()
     .isLength({ max: 20 }).withMessage('Le code postal est trop long.'),
 
   body('address')
     .optional()
     .trim()
+    .escape()
     .notEmpty().withMessage("L'adresse ne peut pas être vide."),
 
   body('district')
     .optional()
     .trim()
+    .escape()
     .notEmpty().withMessage('Le quartier ne peut pas être vide.'),
 
   body('type_id')
