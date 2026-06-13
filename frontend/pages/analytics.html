@@ -61,13 +61,13 @@
   <div class="max-w-7xl mx-auto">
     <p class="text-[#D45A1A] text-xs font-semibold uppercase tracking-widest mb-3 flex items-center gap-2">
       <span class="w-5 h-px bg-[#D45A1A] inline-block"></span>
-      Données DVF 2025 — data.gouv.fr
+      Données DVF 2024 — data.gouv.fr
     </p>
     <h1 class="font-serif font-bold text-white text-3xl sm:text-4xl mb-3">
       Marché immobilier toulousain
     </h1>
-    <p class="text-white/45 text-sm max-w-xl">
-      Analyse de 8 706 transactions réelles sur Toulouse en 2025. Comparez les quartiers, les prix au m² et trouvez le bien qui correspond à votre budget.
+    <p id="hero-desc" class="text-white/45 text-sm max-w-xl">
+      Analyse des transactions réelles sur Toulouse en 2024. Comparez les quartiers, les prix au m² et trouvez le bien qui correspond à votre budget.
     </p>
   </div>
 </section>
@@ -77,22 +77,22 @@
   <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-5">
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
       <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Transactions analysées</p>
-      <p class="font-serif font-bold text-navy text-3xl">8 706</p>
-      <p class="text-[#8FA3B8] text-xs mt-1">Ventes 2025</p>
+      <p id="kpi-transactions" class="font-serif font-bold text-navy text-3xl">—</p>
+      <p class="text-[#8FA3B8] text-xs mt-1">Ventes 2024</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
       <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix m² médian appt</p>
-      <p class="font-serif font-bold text-navy text-3xl">3 349 €</p>
+      <p id="kpi-prix-appart" class="font-serif font-bold text-navy text-3xl">—</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Appartements</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
       <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix m² médian maison</p>
-      <p class="font-serif font-bold text-navy text-3xl">3 750 €</p>
+      <p id="kpi-prix-maison" class="font-serif font-bold text-navy text-3xl">—</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Maisons</p>
     </div>
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-5">
       <p class="text-[#8FA3B8] text-xs font-semibold uppercase tracking-wider mb-2">Prix médian de vente</p>
-      <p class="font-serif font-bold text-navy text-3xl">200 k€</p>
+      <p id="kpi-prix-median" class="font-serif font-bold text-navy text-3xl">—</p>
       <p class="text-[#8FA3B8] text-xs mt-1">Toutes transactions</p>
     </div>
   </div>
@@ -105,14 +105,14 @@
     <!-- Prix m² par quartier -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
       <h2 class="font-serif font-semibold text-navy text-lg mb-1">Prix au m² par quartier</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian en €/m² — Toulouse 2025</p>
+      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian en €/m² — Toulouse 2024</p>
       <canvas id="chartPrixQuartier" height="260"></canvas>
     </div>
  
     <!-- Volume par quartier -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6">
       <h2 class="font-serif font-semibold text-navy text-lg mb-1">Activité par quartier</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Nombre de transactions — Toulouse 2025</p>
+      <p class="text-[#8FA3B8] text-xs mb-5">Nombre de transactions — Toulouse 2024</p>
       <canvas id="chartVolumeQuartier" height="260"></canvas>
     </div>
  
@@ -133,7 +133,7 @@
     <!-- Évolution prix par mois -->
     <div class="bg-white rounded-2xl border border-[#DDE2E9] p-6 lg:col-span-2">
       <h2 class="font-serif font-semibold text-navy text-lg mb-1">Évolution du prix au m²</h2>
-      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian mensuel en €/m² — 2025</p>
+      <p class="text-[#8FA3B8] text-xs mb-5">Prix médian mensuel en €/m² — 2024</p>
       <canvas id="chartEvolution" height="160"></canvas>
     </div>
  
@@ -191,7 +191,7 @@
 <footer class="bg-navy py-8 px-6">
   <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/25">
     <a href="../index.html" class="font-serif font-bold text-base text-white">Ymmo<span class="text-[#D45A1A]">.</span></a>
-    <p>Source : Demandes de Valeurs Foncières (DVF) — data.gouv.fr — 2025</p>
+    <p>Source : Demandes de Valeurs Foncières (DVF) — data.gouv.fr — 2024</p>
     <p>© 2025 Ymmo. Tous droits réservés.</p>
   </div>
 </footer>
