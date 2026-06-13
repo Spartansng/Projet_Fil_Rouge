@@ -14,6 +14,8 @@ const createAppointmentValidator = [
   body('message')
     .optional({ nullable: true })
     .isString().withMessage('Le message doit être une chaîne de caractères.')
+    .trim()
+    .escape()
     .isLength({ max: 1000 }).withMessage('Le message ne doit pas dépasser 1000 caractères.'),
 ];
 
@@ -27,6 +29,8 @@ const updateAppointmentValidator = [
   body('message')
     .optional({ nullable: true })
     .isString().withMessage('Le message doit être une chaîne de caractères.')
+    .trim()
+    .escape()
     .isLength({ max: 1000 }).withMessage('Le message ne doit pas dépasser 1000 caractères.'),
 
   body('status')
