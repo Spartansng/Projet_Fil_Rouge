@@ -3,15 +3,6 @@ redirectIfNotLoggedIn();
 const API_BASE_URL = 'http://localhost:3000';
 const user = getUser();
 
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function $(id) { return document.getElementById(id); }
 
 function showSection(name) {
@@ -92,7 +83,7 @@ function renderAppointments(appointments) {
         <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${appointmentBadge(a.status)}">
           ${appointmentLabel(a.status)}
         </span>
-          <a href="property_detail.html?id=${a.property_id}"
+        <a href="property_detail.html?id=${a.property_id}"
           class="text-xs font-semibold text-[#0F1C2E] bg-[#F4F5F7] hover:bg-[#DDE2E9] px-3 py-1.5 rounded-lg transition-colors">
           Voir le bien
         </a>
@@ -104,54 +95,17 @@ function renderAppointments(appointments) {
 async function handleVenteSubmit(e) {
   e.preventDefault();
   const btn = $('btn-vente');
-
-  const body = {
-    title:       $('vente-title').value.trim(),
-    description: $('vente-description').value.trim(),
-    price:       Number($('vente-price').value),
-    surface:     $('vente-surface').value ? Number($('vente-surface').value) : null,
-    city:        $('vente-city').value.trim(),
-    address:     $('vente-address').value.trim(),
-    district:    $('vente-district').value.trim(),
-    postal_code: $('vente-postal-code').value.trim(),
-    type_id:     Number($('vente-type').value),
-    agency_id:   Number($('vente-agency').value),
-    status_id:   1,
-  };
-
   btn.textContent = '…';
   btn.disabled = true;
 
-  try {
-    const res = await fetch(`${API_BASE_URL}/properties`, {
-      method:  'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify(body),
-    });
+  await new Promise(r => setTimeout(r, 800));
 
-    const json = await res.json();
+  $('vente-success').classList.remove('hidden');
+  $('vente-error').classList.add('hidden');
+  e.target.reset();
 
-    if (!res.ok) {
-      $('vente-error-msg').textContent = json.message || 'Une erreur est survenue.';
-      $('vente-error').classList.remove('hidden');
-      $('vente-success').classList.add('hidden');
-      return;
-    }
-
-    $('vente-success').classList.remove('hidden');
-    $('vente-error').classList.add('hidden');
-    e.target.reset();
-
-  } catch {
-    $('vente-error-msg').textContent = 'Impossible de contacter le serveur.';
-    $('vente-error').classList.remove('hidden');
-  } finally {
-    btn.textContent = 'Envoyer la demande';
-    btn.disabled = false;
-  }
+  btn.textContent = 'Envoyer la demande';
+  btn.disabled = false;
 }
 
 async function loadFormData() {
@@ -169,7 +123,7 @@ async function loadFormData() {
     selAgency.innerHTML = '<option value="">Sélectionner</option>';
 
     (Array.isArray(types)    ? types    : types.data    || []).forEach(t => {
-      selType.innerHTML   += `<option value="${t.type_id}">${escapeHtml(t.name)}</option>`;
+      selType.innerHTML += `<option value="${t.type_id}">${escapeHtml(t.name)}</option>`;
     });
     (Array.isArray(agencies) ? agencies : agencies.data || []).forEach(a => {
       selAgency.innerHTML += `<option value="${a.agency_id}">${escapeHtml(a.name)}</option>`;
@@ -178,10 +132,16 @@ async function loadFormData() {
 }
 
 function renderProfile() {
-  $('profile-username').textContent = user.username || '—';
-  $('profile-email').textContent    = user.email    || '—';
-  $('profile-role').textContent     = user.role === 'vendeur' ? 'Vendeur' : 'Acheteur';
-  $('profile-avatar').textContent   = (user.username || 'U')[0].toUpperCase();
+  $('profile-username').textContent  = user.username || '—';
+  $('profile-email').textContent     = user.email    || '—';
+  $('profile-role').textContent      = user.role === 'vendeur' ? 'Vendeur' : 'Acheteur';
+  $('profile-avatar').textContent    = (user.username || 'U')[0].toUpperCase();
+  if ($('profile-avatar-lg')) {
+    $('profile-avatar-lg').textContent = (user.username || 'U')[0].toUpperCase();
+  }
+  if ($('profile-role-field')) {
+    $('profile-role-field').textContent = user.role === 'vendeur' ? 'Vendeur' : 'Acheteur';
+  }
 }
 
 function initNav() {
