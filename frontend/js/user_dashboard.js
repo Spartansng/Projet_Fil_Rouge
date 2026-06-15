@@ -3,6 +3,15 @@ redirectIfNotLoggedIn();
 const API_BASE_URL = 'http://localhost:3000';
 const user = getUser();
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function $(id) { return document.getElementById(id); }
 
 function showSection(name) {
