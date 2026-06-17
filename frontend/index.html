@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ymmo — La plateforme immobilière de référence à Toulouse. Appartements, maisons, terrains." />
+  <title>Ymmo — Immobilier à Toulouse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:  { DEFAULT: '#0F1C2E', mid: '#1A2D45' },
+            clay:  { DEFAULT: '#D45A1A', light: '#E8743A', dark: '#B04710' },
+            slate: { DEFAULT: '#F4F5F7', mid: '#DDE2E9' },
+            muted: '#8FA3B8',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['DM Sans', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="font-sans text-navy bg-white">
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-18 flex items-center justify-between py-4">
+
+    <a href="#" class="font-serif font-bold text-2xl text-white tracking-tight">
+      Ymmo<span class="text-clay">.</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-white/75">
+      <a href="#biens"    class="hover:text-white transition-colors">Biens</a>
+      <a href="#toulouse" class="hover:text-white transition-colors">Toulouse</a>
+      <a href="pages/analytics.html" class="hover:text-white transition-colors">Marché</a>
+      <a href="#agences"  class="hover:text-white transition-colors">Agences</a>
+      <a href="#contact"  class="hover:text-white transition-colors">Contact</a>
+    </nav>
+
+    <div id="nav-auth" class="hidden md:flex items-center gap-4"></div>
+
+    <button id="menu-btn" aria-expanded="false" aria-label="Ouvrir le menu"
+      class="md:hidden text-white p-1">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden bg-navy-mid border-t border-white/10 px-6 py-5 flex flex-col gap-4 text-sm font-medium text-white/80">
+    <a href="#biens"    class="hover:text-white transition-colors py-1">Biens</a>
+    <a href="#toulouse" class="hover:text-white transition-colors py-1">Toulouse</a>
+    <a href="pages/analytics.html" class="hover:text-white transition-colors py-1">Marché</a>
+    <a href="#agences"  class="hover:text-white transition-colors py-1">Agences</a>
+    <a href="#contact"  class="hover:text-white transition-colors py-1">Contact</a>
+    <hr class="border-white/10" />
+    <a href="pages/login.html" class="text-white/60 py-1">Connexion</a>
+    <a href="pages/register.html" class="bg-clay text-white font-semibold px-5 py-2.5 rounded-lg text-center">Créer un compte</a>
+  </div>
+</header>
+
+
+<section class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+
+  <div class="bg-navy flex flex-col justify-center px-8 sm:px-14 lg:px-16 xl:px-20 pt-32 pb-16 lg:pt-24">
+
+    <span class="inline-flex items-center gap-2 text-clay text-xs font-semibold uppercase tracking-widest mb-8">
+      <span class="w-8 h-px bg-clay inline-block"></span>
+      Toulouse &amp; sa région
+    </span>
+
+    <h1 class="font-serif font-bold text-white text-4xl sm:text-5xl xl:text-6xl leading-tight mb-6">
+      Trouvez votre<br/>
+      futur bien à<br/>
+      <em class="not-italic text-clay">Toulouse</em>
+    </h1>
+
+    <p class="text-white/55 text-base sm:text-lg leading-relaxed max-w-md mb-10">
+      Capitale européenne de l'aéronautique, première ville étudiante de France.
+      Découvrez les opportunités d'une métropole en plein essor.
+    </p>
+
+    <div class="bg-white rounded-2xl p-5 shadow-2xl shadow-navy/40 max-w-lg">
+      <div class="flex gap-6 mb-5 border-b border-slate-mid pb-3">
+        <button class="search-tab active text-sm font-semibold pb-0.5">Acheter</button>
+        <button class="search-tab text-sm font-semibold pb-0.5">Louer</button>
+        <button class="search-tab text-sm font-semibold pb-0.5">Estimer</button>
+      </div>
+
+      <form id="search-form" class="flex flex-col gap-3">
+        <div class="flex items-center gap-3 bg-slate rounded-xl px-4 py-3">
+          <svg class="w-4 h-4 text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <input id="search-location" type="text" placeholder="Ville, quartier, code postal…"
+            class="bg-transparent text-sm text-navy placeholder-muted w-full font-medium outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex items-center gap-2 bg-slate rounded-xl px-4 py-3">
+            <svg class="w-4 h-4 text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <select id="search-type" class="bg-transparent text-sm text-navy w-full font-medium outline-none cursor-pointer">
+              <option value="">Type</option>
+              <option value="1">Appartement</option>
+              <option value="2">Maison</option>
+              <option value="3">Terrain</option>
+              <option value="4">Commerce</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2 bg-slate rounded-xl px-4 py-3">
+            <svg class="w-4 h-4 text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1"/>
+            </svg>
+            <select id="search-budget" class="bg-transparent text-sm text-navy w-full font-medium outline-none cursor-pointer">
+              <option value="">Budget</option>
+              <option value="150000">≤ 150 000 €</option>
+              <option value="250000">≤ 250 000 €</option>
+              <option value="400000">≤ 400 000 €</option>
+              <option value="600000">≤ 600 000 €</option>
+              <option value="1000000">≤ 1 M€</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit"
+          class="bg-clay hover:bg-clay-light text-white font-semibold text-sm rounded-xl py-3.5 flex items-center justify-center gap-2 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          Rechercher un bien
+        </button>
+      </form>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mt-5">
+      <span class="text-white/30 text-xs self-center">Quartiers :</span>
+      <button data-city="Capitole"     class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Capitole</button>
+      <button data-city="Saint-Cyprien" class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Saint-Cyprien</button>
+      <button data-city="Les Minimes"  class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Les Minimes</button>
+      <button data-city="Rangueil"     class="quick-filter text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/35 px-3 py-1 rounded-full transition-all">Rangueil</button>
+    </div>
+  </div>
+
+  <div class="hero-image hidden lg:block min-h-screen"></div>
+
+</section>
+
+
+<section class="bg-slate py-14 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-slate-mid rounded-2xl overflow-hidden">
+
+      <div class="reveal bg-white p-8 flex gap-4 items-start">
+        <div class="stat-accent h-10 self-center flex-shrink-0"></div>
+        <div>
+          <div class="font-serif font-bold text-navy text-4xl" data-target="1240">0</div>
+          <div class="text-muted text-sm mt-1 font-medium">Biens disponibles</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1 bg-white p-8 flex gap-4 items-start">
+        <div class="stat-accent h-10 self-center flex-shrink-0"></div>
+        <div>
+          <div class="font-serif font-bold text-navy text-4xl" data-target="48">0</div>
+          <div class="text-muted text-sm mt-1 font-medium">Agences partenaires</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2 bg-white p-8 flex gap-4 items-start">
+        <div class="stat-accent h-10 self-center flex-shrink-0"></div>
+        <div>
+          <div class="font-serif font-bold text-navy text-4xl" data-target="3800">0</div>
+          <div class="text-muted text-sm mt-1 font-medium">Clients accompagnés</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-3 bg-white p-8 flex gap-4 items-start">
+        <div class="stat-accent h-10 self-center flex-shrink-0"></div>
+        <div>
+          <div class="font-serif font-bold text-navy text-4xl" data-target="97" data-suffix="%">0</div>
+          <div class="text-muted text-sm mt-1 font-medium">Taux de satisfaction</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="biens" class="py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+      <div class="reveal">
+        <p class="text-clay text-xs font-semibold uppercase tracking-widest mb-3 flex items-center gap-2">
+          <span class="w-6 h-px bg-clay inline-block"></span>
+          Sélection
+        </p>
+        <h2 class="font-serif font-bold text-navy text-3xl sm:text-4xl">Biens mis en avant</h2>
+      </div>
+      <a href="pages/properties.html" class="reveal text-sm font-semibold text-muted hover:text-clay transition-colors flex items-center gap-1.5 self-start sm:self-auto">
+        Voir tous les biens
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7">
+
+      <article class="property-card reveal bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80"
+            alt="Appartement Capitole" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 left-3.5 bg-clay text-white text-xs font-bold px-2.5 py-1 rounded-lg">Coup de cœur</span>
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Appartement</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">285 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">T3 lumineux — Capitole, Toulouse</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              67 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              3 pièces
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              Capitole
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=1" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+      <article class="property-card reveal reveal-delay-1 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=80"
+            alt="Maison Saint-Cyprien" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Maison</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">510 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">Maison de ville — Saint-Cyprien</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              130 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              5 pièces
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              St-Cyprien
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=2" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+      <article class="property-card reveal reveal-delay-2 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&auto=format&fit=crop&q=80"
+            alt="Loft Compans" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 left-3.5 bg-navy/85 text-white text-xs font-bold px-2.5 py-1 rounded-lg">Exclusif</span>
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Loft</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">390 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">Loft d'architecte — Compans-Caffarelli</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              95 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              4 pièces
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              Compans
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=3" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+      <article class="property-card reveal reveal-delay-1 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&auto=format&fit=crop&q=80"
+            alt="Studio Rangueil" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 left-3.5 bg-clay text-white text-xs font-bold px-2.5 py-1 rounded-lg">Nouveau</span>
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Studio</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">129 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">Studio étudiant — Rangueil</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              32 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              1 pièce
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              Rangueil
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=4" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+      <article class="property-card reveal reveal-delay-2 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=80"
+            alt="Villa Colomiers" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Maison</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">745 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">Villa avec piscine — Colomiers</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              220 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              7 pièces
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              Colomiers
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=5" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+      <article class="property-card reveal reveal-delay-3 bg-white rounded-2xl overflow-hidden border border-slate-mid shadow-sm">
+        <div class="relative overflow-hidden h-56">
+          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&auto=format&fit=crop&q=80"
+            alt="Maison Les Minimes" class="card-img w-full h-full object-cover" />
+          <span class="absolute top-3.5 right-3.5 bg-white/90 text-navy text-xs font-semibold px-2.5 py-1 rounded-lg">Maison</span>
+        </div>
+        <div class="p-6">
+          <p class="font-serif font-bold text-navy text-2xl mb-1">460 000 €</p>
+          <p class="text-navy/70 text-sm font-medium mb-4">Maison de standing — Les Minimes</p>
+          <div class="flex items-center gap-5 text-xs font-medium text-muted mb-5">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/></svg>
+              155 m²
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              6 pièces
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              Les Minimes
+            </span>
+          </div>
+          <a href="pages/property_detail.html?id=6" class="block w-full text-center text-sm font-semibold bg-navy hover:bg-navy-mid text-white py-2.5 rounded-xl transition-colors">Voir le bien</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="toulouse" class="py-20 px-6 bg-slate">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-14">
+      <p class="reveal text-clay text-xs font-semibold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+        <span class="w-6 h-px bg-clay inline-block"></span>
+        La ville rose
+        <span class="w-6 h-px bg-clay inline-block"></span>
+      </p>
+      <h2 class="reveal font-serif font-bold text-navy text-3xl sm:text-4xl mb-4">
+        Pourquoi vivre à Toulouse ?
+      </h2>
+      <p class="reveal text-muted text-base max-w-lg mx-auto leading-relaxed">
+        Toulouse conjugue excellence industrielle, effervescence étudiante et douceur de vivre méridionale — un équilibre rare en France.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <div class="reveal group relative rounded-2xl overflow-hidden h-72 md:col-span-1">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&auto=format&fit=crop&q=85"
+          alt="Aéronautique Toulouse" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-7">
+          <span class="text-clay text-xs font-bold uppercase tracking-widest block mb-1.5">Économie</span>
+          <h3 class="font-serif font-bold text-white text-xl mb-1.5">Capitale de l'aéronautique</h3>
+          <p class="text-white/65 text-sm leading-relaxed">
+            Siège mondial d'Airbus, plus de 100 000 emplois dans la filière, 1er bassin aéronautique d'Europe.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1 group relative rounded-2xl overflow-hidden h-72">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&auto=format&fit=crop&q=85"
+          alt="Vie étudiante Toulouse" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-7">
+          <span class="text-clay text-xs font-bold uppercase tracking-widest block mb-1.5">Jeunesse</span>
+          <h3 class="font-serif font-bold text-white text-xl mb-1.5">1ère ville étudiante de France</h3>
+          <p class="text-white/65 text-sm leading-relaxed">
+            130 000 étudiants, grandes écoles d'ingénieurs, universités de rang mondial, vie culturelle intense.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1 bg-white rounded-2xl p-8 flex gap-6 items-start">
+        <div class="w-12 h-12 bg-clay/10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+          <svg class="w-5 h-5 text-clay" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2 2v1h8v-1l2-2zM5 11h6"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 10h-3a1 1 0 00-1 1v5l2 2v1h4v-1l2-2v-5a1 1 0 00-1-1h-3z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-serif font-bold text-navy text-xl mb-2">Transports &amp; mobilité</h3>
+          <p class="text-muted text-sm leading-relaxed mb-4">
+            2 lignes de métro, tramway, vélos en libre-service. Paris en 4h20 en TGV. 3ème ligne de métro en construction pour 2028.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">Métro A &amp; B</span>
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">Tramway T1 &amp; T2</span>
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">Aéroport Blagnac</span>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="reveal reveal-delay-2 bg-white rounded-2xl p-8 flex gap-6 items-start">
+        <div class="w-12 h-12 bg-clay/10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+          <svg class="w-5 h-5 text-clay" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13l-.87.5M4.21 16.5l-.87.5M20.66 16.5l-.87-.5M4.21 7.5l-.87-.5M21 12h-1M4 12H3m15.36-6.36l-.71.71M6.34 17.66l-.71.71M17.66 17.66l.71.71M6.34 6.34l.71.71"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-serif font-bold text-navy text-xl mb-2">Qualité de vie</h3>
+          <p class="text-muted text-sm leading-relaxed mb-4">
+            300 jours de soleil, gastronomie du Sud-Ouest, Canal du Midi classé UNESCO, Pyrénées à 1h30 et mer Méditerranée à 2h.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">☀️ 300 j/an de soleil</span>
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">🏔 Pyrénées à 1h30</span>
+            <span class="text-xs font-medium bg-slate text-navy px-2.5 py-1 rounded-lg border border-slate-mid">🏉 Stade Toulousain</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-6 bg-white">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-14">
+      <p class="reveal text-clay text-xs font-semibold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+        <span class="w-6 h-px bg-clay inline-block"></span>
+        Témoignages
+        <span class="w-6 h-px bg-clay inline-block"></span>
+      </p>
+      <h2 class="reveal font-serif font-bold text-navy text-3xl sm:text-4xl">
+        Ils nous ont fait confiance
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+      <div class="reveal bg-slate rounded-2xl p-8">
+        <div class="quote-mark mb-2">"</div>
+        <p class="text-navy/75 text-sm leading-relaxed mb-6">
+          Trouvé notre T4 à Saint-Cyprien en deux semaines. Interface claire, filtres efficaces, et l'agence contactée via Ymmo a été réactive dès le premier message.
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-clay/15 flex items-center justify-center text-clay font-bold text-sm font-serif">ML</div>
+          <div>
+            <p class="font-semibold text-navy text-sm">Marie L.</p>
+            <p class="text-muted text-xs">Acheteuse — Toulouse</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1 bg-slate rounded-2xl p-8">
+        <div class="quote-mark mb-2">"</div>
+        <p class="text-navy/75 text-sm leading-relaxed mb-6">
+          Ingénieur transféré depuis Paris pour Airbus. Ymmo m'a permis de visiter des biens à distance avant même d'arriver. Installation réussie en moins d'un mois.
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-clay/15 flex items-center justify-center text-clay font-bold text-sm font-serif">TR</div>
+          <div>
+            <p class="font-semibold text-navy text-sm">Thomas R.</p>
+            <p class="text-muted text-xs">Ingénieur Airbus — Colomiers</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2 bg-slate rounded-2xl p-8">
+        <div class="quote-mark mb-2">"</div>
+        <p class="text-navy/75 text-sm leading-relaxed mb-6">
+          En master à Paul Sabatier, j'ai trouvé un studio à Rangueil parfaitement dans mon budget. Simple, rapide, sans mauvaise surprise.
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-clay/15 flex items-center justify-center text-clay font-bold text-sm font-serif">SC</div>
+          <div>
+            <p class="font-semibold text-navy text-sm">Sarah C.</p>
+            <p class="text-muted text-xs">Étudiante — Rangueil</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="cta-diagonal bg-navy py-24 px-6">
+  <div class="max-w-3xl mx-auto text-center reveal">
+    <h2 class="font-serif font-bold text-white text-3xl sm:text-4xl mb-4">
+      Votre projet commence ici.
+    </h2>
+    <p class="text-white/55 text-base mb-8 max-w-xl mx-auto leading-relaxed">
+      Des centaines de biens, des dizaines d'agences, une seule plateforme.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="#biens" class="bg-clay hover:bg-clay-light text-white font-semibold text-sm px-8 py-3.5 rounded-xl transition-colors">
+        Parcourir les biens
+      </a>
+      <a href="#contact" class="border border-white/25 hover:border-white/50 text-white font-semibold text-sm px-8 py-3.5 rounded-xl transition-colors">
+        Contacter une agence
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<footer id="contact" class="bg-navy-mid pt-16 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+      <div>
+        <a href="#" class="font-serif font-bold text-2xl text-white block mb-4">
+          Ymmo<span class="text-clay">.</span>
+        </a>
+        <p class="text-white/40 text-sm leading-relaxed mb-6">
+          La plateforme immobilière de référence à Toulouse et sa région.
+        </p>
+        <div class="flex gap-3">
+          <a href="#" aria-label="Facebook"
+            class="w-9 h-9 bg-white/8 hover:bg-clay transition-colors rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram"
+            class="w-9 h-9 bg-white/8 hover:bg-clay transition-colors rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn"
+            class="w-9 h-9 bg-white/8 hover:bg-clay transition-colors rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white/70" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-5">Recherche</h4>
+        <ul class="space-y-3 text-sm text-white/45">
+          <li><a href="#" class="hover:text-white/80 transition-colors">Appartements</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Maisons</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Terrains</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Biens neufs</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Investissement locatif</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-5">À propos</h4>
+        <ul class="space-y-3 text-sm text-white/45">
+          <li><a href="#" class="hover:text-white/80 transition-colors">Qui sommes-nous</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Agences partenaires</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Publier un bien</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Recrutement</a></li>
+          <li><a href="#" class="hover:text-white/80 transition-colors">Presse</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-5">Contact</h4>
+        <ul class="space-y-4 text-sm text-white/45">
+          <li class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-clay mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            </svg>
+            14 rue de la Bourse<br/>31000 Toulouse
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-clay flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            contact@ymmo.fr
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="w-4 h-4 text-clay flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            05 61 88 88 88
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider border-t pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/25">
+      <p>© 2026 Ymmo. Tous droits réservés.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white/50 transition-colors">Mentions légales</a>
+        <a href="#" class="hover:text-white/50 transition-colors">Confidentialité</a>
+        <a href="#" class="hover:text-white/50 transition-colors">CGU</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="js/auth.js"></script>
+<script src="js/homepage.js"></script>
+
+</body>
+</html>

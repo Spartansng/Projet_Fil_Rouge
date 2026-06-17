@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Agent — Ymmo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:  { DEFAULT: '#0F1C2E', mid: '#1A2D45' },
+            clay:  { DEFAULT: '#D45A1A', light: '#E8743A' },
+            slate: { DEFAULT: '#F4F5F7', mid: '#DDE2E9' },
+            muted: '#8FA3B8',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['DM Sans', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .input-field {
+      width: 100%;
+      background: #F4F5F7;
+      border: 1.5px solid #DDE2E9;
+      border-radius: 0.75rem;
+      padding: 0.625rem 1rem;
+      font-size: 0.875rem;
+      color: #0F1C2E;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-field:focus {
+      border-color: #D45A1A;
+      box-shadow: 0 0 0 3px rgba(212,90,26,0.12);
+      background: #fff;
+    }
+    .input-field::placeholder { color: #8FA3B8; }
+  </style>
+</head>
+<body class="font-sans bg-slate text-navy min-h-screen flex">
+
+<!-- SIDEBAR -->
+<aside id="sidebar"
+  class="fixed top-0 left-0 h-full w-64 bg-navy z-40 flex flex-col
+         -translate-x-full lg:translate-x-0 transition-transform duration-300">
+
+  <div class="px-6 py-6 border-b border-white/10">
+    <a href="../index.html" class="font-serif font-bold text-xl text-white">
+      Ymmo<span class="text-[#D45A1A]">.</span>
+    </a>
+    <p class="text-white/40 text-xs mt-1">Espace agent</p>
+  </div>
+
+  <nav class="flex-1 px-3 py-5 flex flex-col gap-1">
+    <button data-section="properties"
+      class="nav-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors text-white/60">
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+      Mes biens
+    </button>
+
+    <button data-section="requests"
+      class="nav-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors text-white/60">
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+      </svg>
+      Demandes clients
+    </button>
+
+    <button data-section="appointments"
+      class="nav-link w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors text-white/60">
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+      </svg>
+      Rendez-vous
+    </button>
+  </nav>
+
+  <div class="px-4 py-5 border-t border-white/10">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-9 h-9 rounded-full bg-[#D45A1A]/20 flex items-center justify-center text-[#D45A1A] font-bold text-sm">
+        A
+      </div>
+      <div class="min-w-0">
+        <p id="user-name" class="text-white text-sm font-semibold truncate"></p>
+        <p id="user-role" class="text-white/40 text-xs capitalize"></p>
+      </div>
+    </div>
+    <button onclick="logout()"
+      class="w-full flex items-center gap-2 text-white/50 hover:text-white text-xs font-medium transition-colors px-2 py-1.5">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+      </svg>
+      Déconnexion
+    </button>
+  </div>
+</aside>
+
+<div id="sidebar-overlay"
+  class="fixed inset-0 bg-navy/50 z-30 lg:hidden hidden"></div>
+
+<!-- MAIN -->
+<div class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+
+  <!-- TOPBAR -->
+  <header class="bg-white border-b border-slate-mid px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+    <div class="flex items-center gap-4">
+      <button id="menu-btn" class="lg:hidden text-muted hover:text-navy transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <h1 id="page-title" class="font-serif font-bold text-navy text-xl"></h1>
+    </div>
+    <button onclick="openAddModal()"
+      class="flex items-center gap-2 bg-[#D45A1A] hover:bg-[#E8743A] text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+      </svg>
+      Ajouter un bien
+    </button>
+  </header>
+
+  <main class="flex-1 px-6 py-8 max-w-7xl w-full mx-auto">
+
+    <!-- STATS -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+      <div class="bg-white rounded-2xl border border-slate-mid p-5 flex items-center gap-4">
+        <div class="w-11 h-11 bg-navy rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-navy font-serif" id="stat-total">—</p>
+          <p class="text-muted text-xs font-medium">Biens publiés</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-mid p-5 flex items-center gap-4">
+        <div class="w-11 h-11 bg-[#D45A1A] rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-navy font-serif" id="stat-requests">—</p>
+          <p class="text-muted text-xs font-medium">Nouvelles demandes</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-mid p-5 flex items-center gap-4">
+        <div class="w-11 h-11 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-navy font-serif" id="stat-appointments">—</p>
+          <p class="text-muted text-xs font-medium">RDV confirmés</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION BIENS -->
+    <div id="section-properties" class="section hidden">
+      <div class="bg-white rounded-2xl border border-slate-mid overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-slate text-left">
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Bien</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Prix</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Surface</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Statut</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Ajouté le</th>
+                <th class="px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="properties-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION DEMANDES -->
+    <div id="section-requests" class="section hidden">
+      <div id="requests-list" class="flex flex-col gap-4"></div>
+    </div>
+
+    <!-- SECTION RDV -->
+    <div id="section-appointments" class="section hidden">
+      <div id="appointments-list" class="flex flex-col gap-4"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL BIEN -->
+<div id="modal" class="hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 bg-navy/50 backdrop-blur-sm overflow-y-auto">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+
+    <div class="flex items-center justify-between px-7 py-5 border-b border-slate-mid">
+      <h2 id="modal-title" class="font-serif font-bold text-navy text-xl"></h2>
+      <button onclick="closeModal()" class="text-muted hover:text-navy transition-colors p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <form id="property-form" class="px-7 py-6 flex flex-col gap-5">
+
+      <div>
+        <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Titre *</label>
+        <input id="form-title" type="text" required placeholder="Ex : T3 lumineux — Capitole" class="input-field" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Description</label>
+        <textarea id="form-description" rows="3" placeholder="Description du bien…" class="input-field resize-none"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Prix (€) *</label>
+          <input id="form-price" type="number" required placeholder="250000" class="input-field" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Surface (m²)</label>
+          <input id="form-surface" type="number" placeholder="75" class="input-field" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Ville *</label>
+          <input id="form-city" type="text" required placeholder="Toulouse" class="input-field" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Code postal</label>
+          <input id="form-postal-code" type="text" placeholder="31000" class="input-field" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Adresse</label>
+          <input id="form-address" type="text" placeholder="12 rue de la Paix" class="input-field" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Quartier</label>
+          <input id="form-district" type="text" placeholder="Capitole" class="input-field" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Type *</label>
+          <select id="form-type" required class="input-field cursor-pointer"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Statut *</label>
+          <select id="form-status" required class="input-field cursor-pointer"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-navy/60 uppercase tracking-wider mb-1.5">Agence *</label>
+          <select id="form-agency" required class="input-field cursor-pointer"></select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2 border-t border-slate-mid">
+        <button type="button" onclick="closeModal()"
+          class="text-sm font-semibold text-muted hover:text-navy px-5 py-2.5 rounded-xl transition-colors">
+          Annuler
+        </button>
+        <button type="submit"
+          class="text-sm font-semibold bg-[#D45A1A] hover:bg-[#E8743A] text-white px-6 py-2.5 rounded-xl transition-colors">
+          Enregistrer
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/agent-dashboard.js"></script>
+</body>
+</html>

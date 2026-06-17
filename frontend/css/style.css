@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --navy:       #0F1C2E;
+  --navy-mid:   #1A2D45;
+  --clay:       #D45A1A;
+  --clay-light: #E8743A;
+  --clay-dark:  #B04710;
+  --slate:      #F4F5F7;
+  --slate-mid:  #DDE2E9;
+  --muted:      #8FA3B8;
+  --white:      #FFFFFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--navy);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .serif {
+  font-family: 'Playfair Display', serif;
+}
+
+#navbar {
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+#navbar.scrolled {
+  background: var(--navy) !important;
+  box-shadow: 0 2px 20px rgba(15,28,46,0.25);
+}
+
+.hero-image {
+  background-image: url('https://images.unsplash.com/photo-1563089145-599997674d42?w=1400&auto=format&fit=crop&q=85');
+  background-size: cover;
+  background-position: center 35%;
+}
+
+.search-tab.active {
+  color: var(--navy);
+  border-bottom: 2px solid var(--clay);
+}
+.search-tab {
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.search-tab:hover { color: var(--navy); }
+
+.stat-accent {
+  width: 3px;
+  background: var(--clay);
+  border-radius: 2px;
+}
+
+.property-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(15,28,46,0.12);
+}
+.property-card .card-img {
+  transition: transform 0.5s ease;
+}
+.property-card:hover .card-img {
+  transform: scale(1.04);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+.quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  line-height: 0.6;
+  color: var(--clay);
+  opacity: 0.25;
+  user-select: none;
+}
+
+.cta-diagonal {
+  clip-path: polygon(0 6%, 100% 0%, 100% 94%, 0% 100%);
+}
+
+.footer-divider {
+  border-color: rgba(255,255,255,0.08);
+}
+
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .property-card, .card-img {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
